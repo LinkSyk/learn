@@ -8,8 +8,10 @@ import { useTodoItemStore } from "./store/project03";
 import { type TodoItemData } from "./components/project03/TodoItem";
 
 import { Plus } from "lucide-react";
+import Modal from "./components/project03/Modal";
 
 function Project03() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const addTodoItem = useTodoItemStore((state: any) => state.addTodoItem);
   const todoItemList: TodoItemData[] = useTodoItemStore(
     (state: any) => state.todoItemList,
@@ -58,10 +60,10 @@ function Project03() {
               <p>待完成</p>
               <p className="text-yellow-500">{todoItemCnt}</p>
             </div>
-            <div className="flex justify-between">
+            {/* <div className="flex justify-between">
               <p>逾期</p>
               <p className="text-red-500">5</p>
-            </div>
+            </div> */}
           </div>
           <div className="m-4 space-y-2 rounded-xl bg-white px-6 py-4 text-xl text-gray-500 shadow-md">
             {/* 过滤器 */}
@@ -101,6 +103,7 @@ function Project03() {
                   <Plus />
                   <button
                     onClick={() => {
+                      setIsModalOpen(!isModalOpen);
                       addTodoItem({
                         key: String(todoItemList.length),
                         title: "待办事项" + todoItemList.length,
@@ -124,6 +127,7 @@ function Project03() {
             <TodoItemList />
           </div>
         </div>
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       </div>
     </div>
   );
